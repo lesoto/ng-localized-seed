@@ -1,0 +1,57 @@
+<div class="transparent-bg"></div>
+<div id="boxed-area" class="page-content">
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+            <div class="form">
+
+                <h2 data-i18n="_SigninTitle_"></h2>
+
+                <!--style3-->
+                <!--<h2>Sign up</h2>-->
+
+                <form role="form">
+                    <div class="form-group">
+                        <label for="username">Your name</label>
+                        <input type="text" class="form-control" id="username" placeholder="Username"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" ng-model="email" class="form-control" name="email"
+                               placeholder="Enter email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" ng-model="pass" class="form-control" id="exampleInputPassword1"
+                               placeholder="Password"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword2" ng-cloak ng-show="createMode">Confirm Password</label>
+                        <input type="password" ng-model="confirm" class="form-control" id="exampleInputPassword2"
+                               placeholder="Password"/>
+                    </div>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                    </div>
+                    <button ng-click="login()" ng-hide="createMode" type="submit" class="btn btn-default">Log In
+                    </button>
+                    <button ng-click="createMode = true" ng-hide="createMode" type="submit" class="btn btn-default">
+                        Register
+                    </button>
+                    <button ng-cloak ng-show="createMode" ng-click="createAccount()" type="submit"
+                            class="btn btn-default">Create Account
+                    </button>
+                    <button ng-cloak ng-show="createMode" ng-click="createMode = false" type="submit"
+                            class="btn btn-default">Cancel
+                    </button>
+                    <p ng-show="err" class="error">{{err}}</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

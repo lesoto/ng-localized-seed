@@ -1,0 +1,30 @@
+{
+  "name": "angular-template-localized",
+  "version": "0.0.1",
+  "homepage": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.2.18",
+    "angular-resource": "1.2.18",
+    "angular-cookies": "1.2.18",
+    "angular-route": "1.2.18",
+    "angular-bootstrap": "0.11.0",
+    "jquery": "latest",
+    "bootstrap": "latest",
+    "angular-ui": "latest",
+    "modernizr": "latest",
+    "font-awesome": "latest"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.18",
+    "angular-scenario": "1.2.18"
+  }
+}

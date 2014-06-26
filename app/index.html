@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" ng-app="angularTemplate">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="_HomeTitle_"></title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <script src="lib/modernizr/modernizr.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
+    <link href="http://fonts.googleapis.com/css?family=Julius+Sans+One|Source+Sans+Pro:200|BenchNine|Quicksand"
+          rel="stylesheet" type="text/css">
+</head>
+<body ng-cloak-auth class="hide">
+<header class="navbar navbar-fixed-top" data-ng-include="'views/header.html'" role="banner"></header>
+<section class="container">
+    <div ng-view></div>
+    <footer class="container"></footer>
+    <!--<languagebar></languagebar>-->
+</section>
+
+
+<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+<script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular-route/angular-route.js"></script>
+<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.js"></script>
+<script src="lib/jquery/dist/jquery.min.js"></script>
+<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/localize.js"></script>
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/directives.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/routes.js"></script>
+<script src="js/services.js"></script>
+<script src="js/service.login.js"></script>
+<script src="js/service.firebase.js"></script>
+<script src="js/module.waitForAuth.js"></script>
+<script src="js/module.routeSecurity.js"></script>
+</body>
+</html>

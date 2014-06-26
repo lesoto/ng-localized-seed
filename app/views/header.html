@@ -1,0 +1,62 @@
+<div class="container">
+
+    <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <i class="icon-reorder"></i>
+        </button>
+        <a class="navbar-brand sitename" href="#/" data-i18n="_HomeTitle_"></a>
+    </div>
+
+    <nav class="sitenav collapse navbar-collapse bs-js-navbar-collapse" role="navigation" ng-controller="LanguageCtrl">
+        <ul class="nav navbar-nav">
+            <li class="dropdown mega-dropdown open"><a href="#/" class="dropdown-toggle" data-toggle="dropdown">Pages<b
+                    class="caret"></b></a>
+                <!--<span class="glyphicon glyphicon-chevron-down pull-right"></span>-->
+                <ul class="dropdown-menu mega-dropdown-menu row">
+                    <li class="dropdown-header">Pages</li>
+                    <li><a href="#/account">Account</a></li>
+                    <li><a href="#/login">Login</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Sitemap</li>
+                    <li><a href="#/sitemap" data-i18n="_SitemapTitle_"></a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Login</li>
+
+                    <li><a href="#/signin" data-i18n="_SigninTitle_"></a></li>
+                    <li><a href="#/signup" data-i18n="_SignupTitle_"></a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Contact</li>
+                    <li><a href="#/contact" data-i18n="_ContactTitle_"></a></li>
+                    <li class="dropdown-header">Communication</li>
+                    <li><a href="#/404">404</a></li>
+                    <li><a href="#/chat">Chat</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Newsletter</li>
+                    <form class="form" role="form">
+                        <div class="form-group">
+                            <label class="sr-only" for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    </form>
+                    <li class="divider"></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b
+                    class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="active"><a
+                            href="#" ng-click="setEnglishLanguage()"
+                            title="English">English</a></li>
+                    <li><a href="#" ng-click="setSpanishLanguage()"
+                           title="Español (Spanish)">Español (Spanish)</a></li>
+                    <li><a href="#" ng-click="setRussianLanguage()" title="Pусский язык (Russian)">Pусский
+                        (Russian)</a></li>
+                </ul>
+            </li>
+        </ul>
+        </li>
+
+        </ul>
+    </nav>
+</div>
