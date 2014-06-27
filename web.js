@@ -1,6 +1,4 @@
-var express = require('express'),
-  routes = require('./app/routes'),
-  api = require('./app/routes/api');
+var express = require('express');
 var logfmt = require("logfmt");
 var bodyParser = require('body-parser');
 
@@ -15,15 +13,14 @@ app.set('view engine', 'ejs');
 app.engine('.html', require('ejs').renderFile);
 app.use(express.static(__dirname + '/app'));
 
-app.get('/', routes.index);
+/*app.get('/', routes.index);
 app.get('/views/:name', routes.views);
 
 app.get('/signin', routes.signin);
 app.get('/signup', routes.signup);
 app.get('/sitemap', routes.sitemap);
 app.get('/contact', routes.contact);
-app.get('/404', routes.page404);
-app.get('/groups', routes.groups);
+app.get('/404', routes.page404);*/
 
 //app.get('*', routes.index);
 //app.get('*', function(req, res) {
