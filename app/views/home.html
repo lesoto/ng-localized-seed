@@ -4,14 +4,58 @@
         <div class="col-lg-12 display center">
             <h2 data-i18n="_HomeTitle_"></h2>
 
-            <p class="status good" ng-show-auth="login">Hello! You are logged in.</p>
+            <div ng-controller="TextPlaceholderCtrl">
+                <h3>Here's a few sentences</h3>
 
-            <p class="status" ng-show-auth="logout">Not logged in</p>
+                <p># Sentences: <input ng-model="numSentences"/></p>
 
-            <p class="status error" ng-show-auth="error">{{auth.error}}</p>
-            <input ng-model="syncedValue" type="text"/> <b>{{syncedValue}}</b>
+                <p ph-txt="{{numSentences}}s"></p>
 
-            <p>Open <a href="{{FBURL}}/syncedValue">Forge</a> or a <a target="_blank" href="index.html">new window</a>
-                to see this input update in real time: </p></div>
+                <p># Paragraphs: <input ng-model="numParagraphs"/></p>
+
+                <div ph-txt="{{numParagraphs}}p"></div>
+
+                <h3>And combining both:</h3>
+
+                <p># Paragraphs: <input ng-model="numCombined"/></p>
+
+                <div ph-txt="{{numCombined}}"></div>
+            </div>
+
+
+            <div ng-controller="ImagePlaceholderCtrl">
+                <div>
+                    <div ph-img="550x100" style="width: 550px; height: 100px; background-repeat: no-repeat;">
+                        <h4>CSS Background</h4>
+                    </div>
+                </div>
+                <hr/>
+                <div>
+                    <ul>
+                        <li>
+                            <h4><code>.img-polaroid</code></h4>
+                            <img class="img-polaroid" ph-img="160x160"/>
+                        </li>
+                        <li>
+                            <h4><code>.img-circle</code></h4>
+                            <img class="img-circle" ph-img="160x160"/>
+                        </li>
+                        <li>
+                            <h4><code>.img-rounded</code></h4>
+                            <img class="img-rounded" ph-img="160x160"/>
+                        </li>
+                    </ul>
+                </div>
+
+                <p class="status good" ng-show-auth="login">You are logged in.</p>
+
+                <p class="status" ng-show-auth="logout">Not logged in</p>
+
+                <p class="status error" ng-show-auth="error">{{auth.error}}</p>
+
+            </div>
+
+
+        </div>
     </div>
 </div>

@@ -1007,3 +1007,5 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     -webkit-box-shadow: inset 0 0 2px#888;
     box-shadow: inset 0 0 2px #888;
 }
+
+.angular-google-map-container { height: 400px; }

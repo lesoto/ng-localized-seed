@@ -10,6 +10,11 @@ angular.module('angularTemplate.routes', ['ngRoute'])
             controller: 'HomeCtrl'
         });
 
+        $routeProvider.when('/contact', {
+            templateUrl: 'views/contact.html',
+            controller: 'ContactCtrl'
+        });
+
         $routeProvider.when('/chat', {
             templateUrl: 'views/chat.html',
             controller: 'ChatCtrl'
@@ -26,5 +31,7 @@ angular.module('angularTemplate.routes', ['ngRoute'])
             controller: 'LoginCtrl'
         });
 
-        $routeProvider.otherwise({redirectTo: '/home'});
+        $routeProvider.otherwise({redirectTo: '/home'
+        });
+
     }]);

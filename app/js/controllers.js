@@ -1,10 +1,19 @@
 'use strict';
 
-/* Controllers */
-
 angular.module('angularTemplate.controllers', [])
+
     .controller('HomeCtrl', ['$scope', 'syncData', function ($scope, syncData) {
         syncData('syncedValue').$bind($scope, 'syncedValue');
+    }])
+
+    .controller('ContactCtrl', ['$scope', function ($scope) {
+        $scope.map = {
+            center: {
+                latitude: 45,
+                longitude: -73
+            },
+            zoom: 8
+        };
     }])
 
     .controller('ChatCtrl', ['$scope', 'syncData', function ($scope, syncData) {
@@ -137,4 +146,13 @@ function LanguageCtrl($scope, localize) {
     };
 }
 
-;
+var ImagePlaceholderCtrl = function ( $scope ) {
+    $scope.imageDimension = '500x370';
+};
+
+var TextPlaceholderCtrl = function ( $scope ) {
+    $scope.numSentences = "13";
+    $scope.numParagraphs = "4";
+    $scope.numCombined = "2p3s";
+};
+

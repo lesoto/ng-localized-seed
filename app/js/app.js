@@ -3,7 +3,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('angularTemplate',
     ['angularTemplate.config', 'angularTemplate.routes', 'angularTemplate.filters', 'angularTemplate.services', 'angularTemplate.directives', 'angularTemplate.controllers',
-        'waitForAuth', 'routeSecurity', 'localization', 'ui.bootstrap']
+        'waitForAuth', 'routeSecurity', 'localization', 'ui.bootstrap', 'google-maps', 'placeholders']
 )
 
     .run(['loginService', '$rootScope', 'FBURL', function (loginService, $rootScope, FBURL) {
