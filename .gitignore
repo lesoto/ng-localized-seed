@@ -1,4 +1,6 @@
 node_modules
 .tmp
 .sass-cache
-app/bower_components
+app/lib
+.idea/
+.idea/workspace.xml
