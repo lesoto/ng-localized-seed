@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('angularTemplate.routes', ['ngRoute'])
+angular.module('ngLocalizedStarterApp.routes', ['ngRoute'])
 
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider.when('/', {
@@ -37,7 +37,7 @@ angular.module('angularTemplate.routes', ['ngRoute'])
             controller: 'LoginCtrl'
         });
 
-        $routeProvider.otherwise({redirectTo: '/'
+        $routeProvider.otherwise({redirectTo: '/404'
         });
 
         $locationProvider.html5Mode(true);

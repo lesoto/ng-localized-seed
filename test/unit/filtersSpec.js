@@ -3,7 +3,7 @@
 /* jasmine specs for filters go here */
 
 describe('filter', function() {
-  beforeEach(module('angularTemplate.filters'));
+  beforeEach(module('ngLocalizedStarterApp.filters'));
 
 
   describe('interpolate', function() {

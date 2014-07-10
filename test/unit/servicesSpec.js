@@ -3,7 +3,7 @@
 /* jasmine specs for services go here */
 
 describe('service', function() {
-   beforeEach(module('angularTemplate.services'));
+   beforeEach(module('ngLocalizedStarterApp.services'));
 
    describe('loginService', function() {
       beforeEach(module(function($provide) {

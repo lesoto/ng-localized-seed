@@ -5,7 +5,7 @@
     "authors": [
         "lesoto <lesoto@lesoto.com>"
     ],
-    "description": "AngularJS skeleton site",
+    "description": "ngLocalizedStarterApp site",
     "license": "MIT",
     "ignore": [
         "**/.*",
@@ -29,7 +29,8 @@
         "modernizr": "latest",
         "jquery": "latest",
         "bootstrap": "latest",
-        "font-awesome": "latest"
+        "font-awesome": "latest",
+        "noty": "latest"
     },
     "devDependencies": {
         "angular-mocks": "1.2.18",

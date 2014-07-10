@@ -3,7 +3,7 @@
 /* verify config settings are present */
 
 describe('service', function() {
-   beforeEach(module('angularTemplate.config'));
+   beforeEach(module('ngLocalizedStarterApp.config'));
 
    it('should be configured (FBURL was set)', inject(function(FBURL) {
       expect(FBURL).not.toEqual('https://INSTANCE.firebaseio.com');

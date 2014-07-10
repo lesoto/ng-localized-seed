@@ -1,11 +1,6 @@
 'use strict';
 
-angular.module('angularTemplate.filters', [])
-    .filter('interpolate', ['version', function (version) {
-        return function (text) {
-            return String(text).replace(/\%VERSION\%/mg, version);
-        }
-    }])
+angular.module('ngLocalizedStarterApp.filters', [])
 
     .filter('reverse', function () {
         function toArray(list) {

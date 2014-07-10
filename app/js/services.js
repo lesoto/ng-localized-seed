@@ -1,11 +1,8 @@
 (function () {
     'use strict';
 
-    /* Services */
+    angular.module('ngLocalizedStarterApp.services', ['ngLocalizedStarterApp.service.login', 'ngLocalizedStarterApp.service.firebase'])
 
-    angular.module('angularTemplate.services', ['angularTemplate.service.login', 'angularTemplate.service.firebase'])
-
-    // put your services here!
     // .service('serviceName', ['dependency', function(dependency) {}]);
 
 })();

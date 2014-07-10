@@ -8,18 +8,6 @@
         "value": "Главная"
     },
     {
-        "key": "_HeaderTeams_",
-        "value": "Команды"
-    },
-    {
-        "key": "_HeaderGroups_",
-        "value": "Групы"
-    },
-    {
-        "key": "_HeaderGames_",
-        "value": "Игры"
-    },
-    {
         "key": "_SitemapTitle_",
         "value": "Карта сайта"
     },
@@ -38,13 +26,5 @@
     {
         "key": "_SignupTitle_",
         "value": "Регистрация"
-    },
-    {
-        "key": "_TeamsTitle_",
-        "value": "RUAll Teams"
-    },
-    {
-        "key": "_PlayerTitle_",
-        "value": "RUPlayer"
     }
 ]

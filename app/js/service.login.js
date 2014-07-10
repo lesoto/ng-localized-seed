@@ -1,4 +1,4 @@
-angular.module('angularTemplate.service.login', ['firebase', 'angularTemplate.service.firebase'])
+angular.module('ngLocalizedStarterApp.service.login', ['firebase', 'ngLocalizedStarterApp.service.firebase'])
 
     .factory('loginService', ['$rootScope', '$firebaseSimpleLogin', 'firebaseRef', 'profileCreator', '$timeout',
         function ($rootScope, $firebaseSimpleLogin, firebaseRef, profileCreator, $timeout) {

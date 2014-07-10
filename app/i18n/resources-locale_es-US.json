@@ -1,50 +1,30 @@
 [
     {
         "key": "_HomeTitle_",
-        "value": "Mondial in SPANISH"
+        "value": "Titulo del sitio"
     },
     {
         "key": "_HeaderTitle_",
-        "value": "Mondial 2014"
-    },
-    {
-        "key": "_HeaderTeams_",
-        "value": "SPTeams"
-    },
-    {
-        "key": "_HeaderGroups_",
-        "value": "SPGroups"
-    },
-    {
-        "key": "_HeaderGames_",
-        "value": "SPGames"
+        "value": "Nombre de empresa"
     },
     {
         "key": "_SitemapTitle_",
-        "value": "SPANISH Sitemap"
+        "value": "Mapa del sitio"
     },
     {
         "key": "_ContactTitle_",
-        "value": "SPANISH Contact"
+        "value": "Contacto"
     },
     {
         "key": "_CopyrightText_",
-        "value": "© 2014 All rights reserved"
+        "value": "© 2014 Reservados todos los derechos"
     },
     {
         "key": "_SigninTitle_",
-        "value": "SP Sign in"
+        "value": "iniciar sesión"
     },
     {
         "key": "_SignupTitle_",
-        "value": "SP Sign up"
-    },
-    {
-        "key": "_TeamsTitle_",
-        "value": "SPAll Teams"
-    },
-    {
-        "key": "_PlayerTitle_",
-        "value": "SPPlayer"
+        "value": "Registrar"
     }
 ]

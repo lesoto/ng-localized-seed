@@ -1,4 +1,4 @@
-angular.module('angularTemplate.service.firebase', ['firebase'])
+angular.module('ngLocalizedStarterApp.service.firebase', ['firebase'])
 
 // a simple utility to create references to Firebase paths
     .factory('firebaseRef', ['Firebase', 'FBURL', function (Firebase, FBURL) {

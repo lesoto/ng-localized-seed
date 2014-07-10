@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularTemplate.controllers', [])
+angular.module('ngLocalizedStarterApp.controllers', [])
 
     .controller('HomeCtrl', ['$scope', 'syncData', function ($scope, syncData) {
         syncData('syncedValue').$bind($scope, 'syncedValue');
@@ -64,7 +64,6 @@ angular.module('angularTemplate.controllers', [])
                         $scope.err = err ? err + '' : null;
                     }
                     else {
-                        // must be logged in before I can write to my profile
                         $scope.login(function () {
                             loginService.createProfile(user.uid, user.email);
                             $location.path('/account');

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('angularTemplate',
-    ['angularTemplate.config', 'angularTemplate.routes', 'angularTemplate.filters', 'angularTemplate.services', 'angularTemplate.directives', 'angularTemplate.controllers',
+angular.module('ngLocalizedStarterApp',
+    ['ngLocalizedStarterApp.config', 'ngLocalizedStarterApp.routes', 'ngLocalizedStarterApp.filters', 'ngLocalizedStarterApp.services', 'ngLocalizedStarterApp.directives', 'ngLocalizedStarterApp.controllers',
         'waitForAuth', 'routeSecurity', 'localization', 'ui.bootstrap', 'google-maps', 'placeholders']
 )
 

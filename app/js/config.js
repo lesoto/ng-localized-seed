@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularTemplate.config', [])
+angular.module('ngLocalizedStarterApp.config', [])
     .constant('loginRedirectPath', '/login')
     .constant('FBURL', 'https://crackling-fire-8110.firebaseio.com')
 
