@@ -577,4 +577,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('screenshots', ['clean:server', 'concurrent:server', 'connect:livereload', 'autoshot']);
 
+    grunt.registerTask('travis', 'lint');
+
 };
