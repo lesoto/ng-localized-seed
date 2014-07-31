@@ -1,9 +1,21 @@
 language: node_js
 node_js:
-  - '0.8'
-  - '0.10'
+- '0.8'
+- '0.10'
 before_script:
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
+- npm install -g bower grunt-cli
+- bower install
 notifications:
   email: true
+env:
+  global:
+    secure: ehSC+w8If2288p04rXzaX855HcAHT+BqcepP2YBAeIZrBXNfz0pnToLMVHwoaS/XSHty5rISjPRpk9HounPxhiy5wutQ+ZyZ3+Irmfntd8MsZArZgr4ucyDHDD+TzofHAvYAkL+N7wu0wsyyMw+t6f6CY2Yf9I9IMMVrp1E/AMs=
+after_success:
+  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  - git remote add heroku git@heroku.com:ng-localized-starter-app.git
+  - echo "Host heroku.com" >> ~/.ssh/config
+  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "   CheckHostIP no" >> ~/.ssh/config
+  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+  - yes | heroku keys:add
+  - yes | git push heroku master
