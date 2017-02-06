@@ -1,32 +1,34 @@
-define([
-    "../core",
-    "../var/strundefined"
-], function (jQuery, strundefined) {
+define( [
+	"../core"
+], function( jQuery, noGlobal ) {
 
-    var
-    // Map over jQuery in case of overwrite
-        _jQuery = window.jQuery,
+"use strict";
 
-    // Map over the $ in case of overwrite
-        _$ = window.$;
+var
 
-    jQuery.noConflict = function (deep) {
-        if (window.$ === jQuery) {
-            window.$ = _$;
-        }
+	// Map over jQuery in case of overwrite
+	_jQuery = window.jQuery,
 
-        if (deep && window.jQuery === jQuery) {
-            window.jQuery = _jQuery;
-        }
+	// Map over the $ in case of overwrite
+	_$ = window.$;
 
-        return jQuery;
-    };
+jQuery.noConflict = function( deep ) {
+	if ( window.$ === jQuery ) {
+		window.$ = _$;
+	}
 
-// Expose jQuery and $ identifiers, even in
-// AMD (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
+	if ( deep && window.jQuery === jQuery ) {
+		window.jQuery = _jQuery;
+	}
+
+	return jQuery;
+};
+
+// Expose jQuery and $ identifiers, even in AMD
+// (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
 // and CommonJS for browser emulators (#13566)
-    if (typeof noGlobal === strundefined) {
-        window.jQuery = window.$ = jQuery;
-    }
+if ( !noGlobal ) {
+	window.jQuery = window.$ = jQuery;
+}
 
-});
+} );

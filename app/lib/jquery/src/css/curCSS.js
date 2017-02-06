@@ -1,57 +1,59 @@
-define([
-    "../core",
-    "./var/rnumnonpx",
-    "./var/rmargin",
-    "./var/getStyles",
-    "../selector" // contains
-], function (jQuery, rnumnonpx, rmargin, getStyles) {
+define( [
+	"../core",
+	"./var/rnumnonpx",
+	"./var/rmargin",
+	"./var/getStyles",
+	"./support",
+	"../selector" // Get jQuery.contains
+], function( jQuery, rnumnonpx, rmargin, getStyles, support ) {
 
-    function curCSS(elem, name, computed) {
-        var width, minWidth, maxWidth, ret,
-            style = elem.style;
+"use strict";
 
-        computed = computed || getStyles(elem);
+function curCSS( elem, name, computed ) {
+	var width, minWidth, maxWidth, ret,
+		style = elem.style;
 
-        // Support: IE9
-        // getPropertyValue is only needed for .css('filter') in IE9, see #12537
-        if (computed) {
-            ret = computed.getPropertyValue(name) || computed[ name ];
-        }
+	computed = computed || getStyles( elem );
 
-        if (computed) {
+	// Support: IE <=9 only
+	// getPropertyValue is only needed for .css('filter') (#12537)
+	if ( computed ) {
+		ret = computed.getPropertyValue( name ) || computed[ name ];
 
-            if (ret === "" && !jQuery.contains(elem.ownerDocument, elem)) {
-                ret = jQuery.style(elem, name);
-            }
+		if ( ret === "" && !jQuery.contains( elem.ownerDocument, elem ) ) {
+			ret = jQuery.style( elem, name );
+		}
 
-            // Support: iOS < 6
-            // A tribute to the "awesome hack by Dean Edwards"
-            // iOS < 6 (at least) returns percentage for a larger set of values, but width seems to be reliably pixels
-            // this is against the CSSOM draft spec: http://dev.w3.org/csswg/cssom/#resolved-values
-            if (rnumnonpx.test(ret) && rmargin.test(name)) {
+		// A tribute to the "awesome hack by Dean Edwards"
+		// Android Browser returns percentage for some values,
+		// but width seems to be reliably pixels.
+		// This is against the CSSOM draft spec:
+		// https://drafts.csswg.org/cssom/#resolved-values
+		if ( !support.pixelMarginRight() && rnumnonpx.test( ret ) && rmargin.test( name ) ) {
 
-                // Remember the original values
-                width = style.width;
-                minWidth = style.minWidth;
-                maxWidth = style.maxWidth;
+			// Remember the original values
+			width = style.width;
+			minWidth = style.minWidth;
+			maxWidth = style.maxWidth;
 
-                // Put in the new values to get a computed value out
-                style.minWidth = style.maxWidth = style.width = ret;
-                ret = computed.width;
+			// Put in the new values to get a computed value out
+			style.minWidth = style.maxWidth = style.width = ret;
+			ret = computed.width;
 
-                // Revert the changed values
-                style.width = width;
-                style.minWidth = minWidth;
-                style.maxWidth = maxWidth;
-            }
-        }
+			// Revert the changed values
+			style.width = width;
+			style.minWidth = minWidth;
+			style.maxWidth = maxWidth;
+		}
+	}
 
-        return ret !== undefined ?
-            // Support: IE
-            // IE returns zIndex value as an integer.
-            ret + "" :
-            ret;
-    }
+	return ret !== undefined ?
 
-    return curCSS;
-});
+		// Support: IE <=9 - 11 only
+		// IE returns zIndex value as an integer.
+		ret + "" :
+		ret;
+}
+
+return curCSS;
+} );

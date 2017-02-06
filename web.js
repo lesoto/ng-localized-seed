@@ -5,9 +5,10 @@ var bodyParser = require('body-parser');
 var app = express();
 
 app.use(logfmt.requestLogger());
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
  
-var port = Number(process.env.PORT || 5000);
+var port = Number(process.env.PORT || 8000);
 
 app.set('view engine', 'ejs');
 app.engine('.html', require('ejs').renderFile);

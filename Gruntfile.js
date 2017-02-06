@@ -23,7 +23,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-json2po');
 
     var yeomanConfig = {
-        app: require('./bower.json').appPath || 'app',
         dist: 'dist'
     };
 
@@ -134,12 +133,6 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
 
         watch: {
-            /*
-             bower : {
-             files : ['bower.json'],
-             tasks : ['bowerInstall']
-             },
-             */
             coffee: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
                 tasks: ['coffee:dist']
@@ -324,16 +317,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        bowerInstall: {
-            app: {
-                src: ['<%= yeoman.app %>/index.html'],
-                ignorePath: '<%= yeoman.app %>/'
-            },
-            sass: {
-                src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                ignorePath: '<%= yeoman.app %>/lib/'
-            }
-        },
 
         compass: {
             options: {
@@ -501,43 +484,9 @@ module.exports = function (grunt) {
         concurrent: {
             server: ['compass:server'],
             test: ['compass'],
-            dist: [/*'compass:dist',*/ 'imagemin', 'svgmin']
+            //dist: [/*'compass:dist',*/ 'imagemin', 'svgmin']
         },
 
-        // By default, your `index.html`'s <!-- Usemin block --> will take care of
-        // minification. These next options are pre-configured if you do not wish
-        // to use the Usemin blocks.
-        // cssmin: {
-        //   dist: {
-        //     files: {
-        //       '<%= yeoman.dist %>/styles/main.css': [
-        //         '.tmp/styles/{,*/}*.css',
-        //         '<%= yeoman.app %>/styles/{,*/}*.css'
-        //       ]
-        //     }
-        //   }
-        // },
-        // uglify: {
-        //   dist: {
-        //     files: {
-        //       '<%= yeoman.dist %>/scripts/scripts.js': [
-        //         '<%= yeoman.dist %>/scripts/scripts.js'
-        //       ]
-        //     }
-        //   }
-        // },
-        // concat: {
-        //   dist: {}
-        // },
-
-        bower: {
-            options: {
-                exclude: ['modernizr']
-            },
-            all: {
-                rjsConfig: '<%= yeoman.app %>/scripts/main.js'
-            }
-        },
         // Test settings
         karma: {
             unit: {
@@ -552,7 +501,7 @@ module.exports = function (grunt) {
             return grunt.task.run(['build', 'connect:dist:keepalive']);
         }
 
-        grunt.task.run(['clean:server', //'bowerInstall',
+        grunt.task.run(['clean:server', 
             //'concurrent:server',
             'autoprefixer', 'connect:livereload', 'watch']);
 
@@ -571,7 +520,7 @@ module.exports = function (grunt) {
         //'karma',
         'jshint']);
 
-    grunt.registerTask('build', ['clean:dist', 'bowerInstall', 'useminPrepare', 'nggettext_extract', 'json2po', 'concurrent:dist', 'autoprefixer', 'ngmin', 'copy:dist', 'cdnify', 'rev', 'usemin', 'htmlmin', 'requirejs', 'requirejs:dist' /* 'autoshot', 'cssmin', 'concat', 'modernizr', 'responsive_images:dev', 'htmlSnapshot', 'uglify', */   ]);
+    grunt.registerTask('build', ['clean:dist', 'useminPrepare', 'nggettext_extract', 'json2po', 'concurrent:dist', 'autoprefixer', 'ngmin', 'copy:dist', 'cdnify', 'rev', 'usemin', 'htmlmin', 'requirejs', 'requirejs:dist' /* 'autoshot', 'cssmin', 'concat', 'modernizr', 'responsive_images:dev', 'htmlSnapshot', 'uglify', */   ]);
 
     grunt.registerTask('default', ['newer:jshint', 'test', 'build']);
 

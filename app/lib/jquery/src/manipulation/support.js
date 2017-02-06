@@ -1,31 +1,35 @@
-define([
-    "../var/support"
-], function (support) {
+define( [
+	"../var/document",
+	"../var/support"
+], function( document, support ) {
 
-    (function () {
-        var fragment = document.createDocumentFragment(),
-            div = fragment.appendChild(document.createElement("div")),
-            input = document.createElement("input");
+"use strict";
 
-        // #11217 - WebKit loses check when the name is after the checked attribute
-        // Support: Windows Web Apps (WWA)
-        // `name` and `type` need .setAttribute for WWA
-        input.setAttribute("type", "radio");
-        input.setAttribute("checked", "checked");
-        input.setAttribute("name", "t");
+( function() {
+	var fragment = document.createDocumentFragment(),
+		div = fragment.appendChild( document.createElement( "div" ) ),
+		input = document.createElement( "input" );
 
-        div.appendChild(input);
+	// Support: Android 4.0 - 4.3 only
+	// Check state lost if the name is set (#11217)
+	// Support: Windows Web Apps (WWA)
+	// `name` and `type` must use .setAttribute for WWA (#14901)
+	input.setAttribute( "type", "radio" );
+	input.setAttribute( "checked", "checked" );
+	input.setAttribute( "name", "t" );
 
-        // Support: Safari 5.1, iOS 5.1, Android 4.x, Android 2.3
-        // old WebKit doesn't clone checked state correctly in fragments
-        support.checkClone = div.cloneNode(true).cloneNode(true).lastChild.checked;
+	div.appendChild( input );
 
-        // Make sure textarea (and checkbox) defaultValue is properly cloned
-        // Support: IE9-IE11+
-        div.innerHTML = "<textarea>x</textarea>";
-        support.noCloneChecked = !!div.cloneNode(true).lastChild.defaultValue;
-    })();
+	// Support: Android <=4.1 only
+	// Older WebKit doesn't clone checked state correctly in fragments
+	support.checkClone = div.cloneNode( true ).cloneNode( true ).lastChild.checked;
 
-    return support;
+	// Support: IE <=11 only
+	// Make sure textarea (and checkbox) defaultValue is properly cloned
+	div.innerHTML = "<textarea>x</textarea>";
+	support.noCloneChecked = !!div.cloneNode( true ).lastChild.defaultValue;
+} )();
 
-});
+return support;
+
+} );

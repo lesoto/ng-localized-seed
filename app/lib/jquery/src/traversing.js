@@ -1,201 +1,178 @@
-define([
-    "./core",
-    "./var/indexOf",
-    "./traversing/var/rneedsContext",
-    "./core/init",
-    "./traversing/findFilter",
-    "./selector"
-], function (jQuery, indexOf, rneedsContext) {
+define( [
+	"./core",
+	"./var/indexOf",
+	"./traversing/var/dir",
+	"./traversing/var/siblings",
+	"./traversing/var/rneedsContext",
+	"./core/init",
+	"./traversing/findFilter",
+	"./selector"
+], function( jQuery, indexOf, dir, siblings, rneedsContext ) {
 
-    var rparentsprev = /^(?:parents|prev(?:Until|All))/,
-    // methods guaranteed to produce a unique set when starting from a unique set
-        guaranteedUnique = {
-            children: true,
-            contents: true,
-            next: true,
-            prev: true
-        };
+"use strict";
 
-    jQuery.extend({
-        dir: function (elem, dir, until) {
-            var matched = [],
-                truncate = until !== undefined;
+var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 
-            while ((elem = elem[ dir ]) && elem.nodeType !== 9) {
-                if (elem.nodeType === 1) {
-                    if (truncate && jQuery(elem).is(until)) {
-                        break;
-                    }
-                    matched.push(elem);
-                }
-            }
-            return matched;
-        },
+	// Methods guaranteed to produce a unique set when starting from a unique set
+	guaranteedUnique = {
+		children: true,
+		contents: true,
+		next: true,
+		prev: true
+	};
 
-        sibling: function (n, elem) {
-            var matched = [];
+jQuery.fn.extend( {
+	has: function( target ) {
+		var targets = jQuery( target, this ),
+			l = targets.length;
 
-            for (; n; n = n.nextSibling) {
-                if (n.nodeType === 1 && n !== elem) {
-                    matched.push(n);
-                }
-            }
+		return this.filter( function() {
+			var i = 0;
+			for ( ; i < l; i++ ) {
+				if ( jQuery.contains( this, targets[ i ] ) ) {
+					return true;
+				}
+			}
+		} );
+	},
 
-            return matched;
-        }
-    });
+	closest: function( selectors, context ) {
+		var cur,
+			i = 0,
+			l = this.length,
+			matched = [],
+			targets = typeof selectors !== "string" && jQuery( selectors );
 
-    jQuery.fn.extend({
-        has: function (target) {
-            var targets = jQuery(target, this),
-                l = targets.length;
+		// Positional selectors never match, since there's no _selection_ context
+		if ( !rneedsContext.test( selectors ) ) {
+			for ( ; i < l; i++ ) {
+				for ( cur = this[ i ]; cur && cur !== context; cur = cur.parentNode ) {
 
-            return this.filter(function () {
-                var i = 0;
-                for (; i < l; i++) {
-                    if (jQuery.contains(this, targets[i])) {
-                        return true;
-                    }
-                }
-            });
-        },
+					// Always skip document fragments
+					if ( cur.nodeType < 11 && ( targets ?
+						targets.index( cur ) > -1 :
 
-        closest: function (selectors, context) {
-            var cur,
-                i = 0,
-                l = this.length,
-                matched = [],
-                pos = rneedsContext.test(selectors) || typeof selectors !== "string" ?
-                    jQuery(selectors, context || this.context) :
-                    0;
+						// Don't pass non-elements to Sizzle
+						cur.nodeType === 1 &&
+							jQuery.find.matchesSelector( cur, selectors ) ) ) {
 
-            for (; i < l; i++) {
-                for (cur = this[i]; cur && cur !== context; cur = cur.parentNode) {
-                    // Always skip document fragments
-                    if (cur.nodeType < 11 && (pos ?
-                        pos.index(cur) > -1 :
+						matched.push( cur );
+						break;
+					}
+				}
+			}
+		}
 
-                        // Don't pass non-elements to Sizzle
-                        cur.nodeType === 1 &&
-                        jQuery.find.matchesSelector(cur, selectors))) {
+		return this.pushStack( matched.length > 1 ? jQuery.uniqueSort( matched ) : matched );
+	},
 
-                        matched.push(cur);
-                        break;
-                    }
-                }
-            }
+	// Determine the position of an element within the set
+	index: function( elem ) {
 
-            return this.pushStack(matched.length > 1 ? jQuery.unique(matched) : matched);
-        },
+		// No argument, return index in parent
+		if ( !elem ) {
+			return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
+		}
 
-        // Determine the position of an element within
-        // the matched set of elements
-        index: function (elem) {
+		// Index in selector
+		if ( typeof elem === "string" ) {
+			return indexOf.call( jQuery( elem ), this[ 0 ] );
+		}
 
-            // No argument, return index in parent
-            if (!elem) {
-                return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
-            }
+		// Locate the position of the desired element
+		return indexOf.call( this,
 
-            // index in selector
-            if (typeof elem === "string") {
-                return indexOf.call(jQuery(elem), this[ 0 ]);
-            }
+			// If it receives a jQuery object, the first element is used
+			elem.jquery ? elem[ 0 ] : elem
+		);
+	},
 
-            // Locate the position of the desired element
-            return indexOf.call(this,
+	add: function( selector, context ) {
+		return this.pushStack(
+			jQuery.uniqueSort(
+				jQuery.merge( this.get(), jQuery( selector, context ) )
+			)
+		);
+	},
 
-                // If it receives a jQuery object, the first element is used
-                elem.jquery ? elem[ 0 ] : elem
-            );
-        },
+	addBack: function( selector ) {
+		return this.add( selector == null ?
+			this.prevObject : this.prevObject.filter( selector )
+		);
+	}
+} );
 
-        add: function (selector, context) {
-            return this.pushStack(
-                jQuery.unique(
-                    jQuery.merge(this.get(), jQuery(selector, context))
-                )
-            );
-        },
+function sibling( cur, dir ) {
+	while ( ( cur = cur[ dir ] ) && cur.nodeType !== 1 ) {}
+	return cur;
+}
 
-        addBack: function (selector) {
-            return this.add(selector == null ?
-                    this.prevObject : this.prevObject.filter(selector)
-            );
-        }
-    });
+jQuery.each( {
+	parent: function( elem ) {
+		var parent = elem.parentNode;
+		return parent && parent.nodeType !== 11 ? parent : null;
+	},
+	parents: function( elem ) {
+		return dir( elem, "parentNode" );
+	},
+	parentsUntil: function( elem, i, until ) {
+		return dir( elem, "parentNode", until );
+	},
+	next: function( elem ) {
+		return sibling( elem, "nextSibling" );
+	},
+	prev: function( elem ) {
+		return sibling( elem, "previousSibling" );
+	},
+	nextAll: function( elem ) {
+		return dir( elem, "nextSibling" );
+	},
+	prevAll: function( elem ) {
+		return dir( elem, "previousSibling" );
+	},
+	nextUntil: function( elem, i, until ) {
+		return dir( elem, "nextSibling", until );
+	},
+	prevUntil: function( elem, i, until ) {
+		return dir( elem, "previousSibling", until );
+	},
+	siblings: function( elem ) {
+		return siblings( ( elem.parentNode || {} ).firstChild, elem );
+	},
+	children: function( elem ) {
+		return siblings( elem.firstChild );
+	},
+	contents: function( elem ) {
+		return elem.contentDocument || jQuery.merge( [], elem.childNodes );
+	}
+}, function( name, fn ) {
+	jQuery.fn[ name ] = function( until, selector ) {
+		var matched = jQuery.map( this, fn, until );
 
-    function sibling(cur, dir) {
-        while ((cur = cur[dir]) && cur.nodeType !== 1) {
-        }
-        return cur;
-    }
+		if ( name.slice( -5 ) !== "Until" ) {
+			selector = until;
+		}
 
-    jQuery.each({
-        parent: function (elem) {
-            var parent = elem.parentNode;
-            return parent && parent.nodeType !== 11 ? parent : null;
-        },
-        parents: function (elem) {
-            return jQuery.dir(elem, "parentNode");
-        },
-        parentsUntil: function (elem, i, until) {
-            return jQuery.dir(elem, "parentNode", until);
-        },
-        next: function (elem) {
-            return sibling(elem, "nextSibling");
-        },
-        prev: function (elem) {
-            return sibling(elem, "previousSibling");
-        },
-        nextAll: function (elem) {
-            return jQuery.dir(elem, "nextSibling");
-        },
-        prevAll: function (elem) {
-            return jQuery.dir(elem, "previousSibling");
-        },
-        nextUntil: function (elem, i, until) {
-            return jQuery.dir(elem, "nextSibling", until);
-        },
-        prevUntil: function (elem, i, until) {
-            return jQuery.dir(elem, "previousSibling", until);
-        },
-        siblings: function (elem) {
-            return jQuery.sibling(( elem.parentNode || {} ).firstChild, elem);
-        },
-        children: function (elem) {
-            return jQuery.sibling(elem.firstChild);
-        },
-        contents: function (elem) {
-            return elem.contentDocument || jQuery.merge([], elem.childNodes);
-        }
-    }, function (name, fn) {
-        jQuery.fn[ name ] = function (until, selector) {
-            var matched = jQuery.map(this, fn, until);
+		if ( selector && typeof selector === "string" ) {
+			matched = jQuery.filter( selector, matched );
+		}
 
-            if (name.slice(-5) !== "Until") {
-                selector = until;
-            }
+		if ( this.length > 1 ) {
 
-            if (selector && typeof selector === "string") {
-                matched = jQuery.filter(selector, matched);
-            }
+			// Remove duplicates
+			if ( !guaranteedUnique[ name ] ) {
+				jQuery.uniqueSort( matched );
+			}
 
-            if (this.length > 1) {
-                // Remove duplicates
-                if (!guaranteedUnique[ name ]) {
-                    jQuery.unique(matched);
-                }
+			// Reverse order for parents* and prev-derivatives
+			if ( rparentsprev.test( name ) ) {
+				matched.reverse();
+			}
+		}
 
-                // Reverse order for parents* and prev-derivatives
-                if (rparentsprev.test(name)) {
-                    matched.reverse();
-                }
-            }
+		return this.pushStack( matched );
+	};
+} );
 
-            return this.pushStack(matched);
-        };
-    });
-
-    return jQuery;
-});
+return jQuery;
+} );

@@ -1,96 +1,143 @@
-define([
-    "../core",
-    "../core/access",
-    "./support"
-], function (jQuery, access, support) {
+define( [
+	"../core",
+	"../core/access",
+	"./support",
+	"../selector"
+], function( jQuery, access, support ) {
 
-    var rfocusable = /^(?:input|select|textarea|button)$/i;
+"use strict";
 
-    jQuery.fn.extend({
-        prop: function (name, value) {
-            return access(this, jQuery.prop, name, value, arguments.length > 1);
-        },
+var rfocusable = /^(?:input|select|textarea|button)$/i,
+	rclickable = /^(?:a|area)$/i;
 
-        removeProp: function (name) {
-            return this.each(function () {
-                delete this[ jQuery.propFix[ name ] || name ];
-            });
-        }
-    });
+jQuery.fn.extend( {
+	prop: function( name, value ) {
+		return access( this, jQuery.prop, name, value, arguments.length > 1 );
+	},
 
-    jQuery.extend({
-        propFix: {
-            "for": "htmlFor",
-            "class": "className"
-        },
+	removeProp: function( name ) {
+		return this.each( function() {
+			delete this[ jQuery.propFix[ name ] || name ];
+		} );
+	}
+} );
 
-        prop: function (elem, name, value) {
-            var ret, hooks, notxml,
-                nType = elem.nodeType;
+jQuery.extend( {
+	prop: function( elem, name, value ) {
+		var ret, hooks,
+			nType = elem.nodeType;
 
-            // don't get/set properties on text, comment and attribute nodes
-            if (!elem || nType === 3 || nType === 8 || nType === 2) {
-                return;
-            }
+		// Don't get/set properties on text, comment and attribute nodes
+		if ( nType === 3 || nType === 8 || nType === 2 ) {
+			return;
+		}
 
-            notxml = nType !== 1 || !jQuery.isXMLDoc(elem);
+		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
 
-            if (notxml) {
-                // Fix name and attach hooks
-                name = jQuery.propFix[ name ] || name;
-                hooks = jQuery.propHooks[ name ];
-            }
+			// Fix name and attach hooks
+			name = jQuery.propFix[ name ] || name;
+			hooks = jQuery.propHooks[ name ];
+		}
 
-            if (value !== undefined) {
-                return hooks && "set" in hooks && (ret = hooks.set(elem, value, name)) !== undefined ?
-                    ret :
-                    ( elem[ name ] = value );
+		if ( value !== undefined ) {
+			if ( hooks && "set" in hooks &&
+				( ret = hooks.set( elem, value, name ) ) !== undefined ) {
+				return ret;
+			}
 
-            } else {
-                return hooks && "get" in hooks && (ret = hooks.get(elem, name)) !== null ?
-                    ret :
-                    elem[ name ];
-            }
-        },
+			return ( elem[ name ] = value );
+		}
 
-        propHooks: {
-            tabIndex: {
-                get: function (elem) {
-                    return elem.hasAttribute("tabindex") || rfocusable.test(elem.nodeName) || elem.href ?
-                        elem.tabIndex :
-                        -1;
-                }
-            }
-        }
-    });
+		if ( hooks && "get" in hooks && ( ret = hooks.get( elem, name ) ) !== null ) {
+			return ret;
+		}
 
-// Support: IE9+
-// Selectedness for an option in an optgroup can be inaccurate
-    if (!support.optSelected) {
-        jQuery.propHooks.selected = {
-            get: function (elem) {
-                var parent = elem.parentNode;
-                if (parent && parent.parentNode) {
-                    parent.parentNode.selectedIndex;
-                }
-                return null;
-            }
-        };
-    }
+		return elem[ name ];
+	},
 
-    jQuery.each([
-        "tabIndex",
-        "readOnly",
-        "maxLength",
-        "cellSpacing",
-        "cellPadding",
-        "rowSpan",
-        "colSpan",
-        "useMap",
-        "frameBorder",
-        "contentEditable"
-    ], function () {
-        jQuery.propFix[ this.toLowerCase() ] = this;
-    });
+	propHooks: {
+		tabIndex: {
+			get: function( elem ) {
 
-});
+				// Support: IE <=9 - 11 only
+				// elem.tabIndex doesn't always return the
+				// correct value when it hasn't been explicitly set
+				// https://web.archive.org/web/20141116233347/http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				// Use proper attribute retrieval(#12072)
+				var tabindex = jQuery.find.attr( elem, "tabindex" );
+
+				if ( tabindex ) {
+					return parseInt( tabindex, 10 );
+				}
+
+				if (
+					rfocusable.test( elem.nodeName ) ||
+					rclickable.test( elem.nodeName ) &&
+					elem.href
+				) {
+					return 0;
+				}
+
+				return -1;
+			}
+		}
+	},
+
+	propFix: {
+		"for": "htmlFor",
+		"class": "className"
+	}
+} );
+
+// Support: IE <=11 only
+// Accessing the selectedIndex property
+// forces the browser to respect setting selected
+// on the option
+// The getter ensures a default option is selected
+// when in an optgroup
+// eslint rule "no-unused-expressions" is disabled for this code
+// since it considers such accessions noop
+if ( !support.optSelected ) {
+	jQuery.propHooks.selected = {
+		get: function( elem ) {
+
+			/* eslint no-unused-expressions: "off" */
+
+			var parent = elem.parentNode;
+			if ( parent && parent.parentNode ) {
+				parent.parentNode.selectedIndex;
+			}
+			return null;
+		},
+		set: function( elem ) {
+
+			/* eslint no-unused-expressions: "off" */
+
+			var parent = elem.parentNode;
+			if ( parent ) {
+				parent.selectedIndex;
+
+				if ( parent.parentNode ) {
+					parent.parentNode.selectedIndex;
+				}
+			}
+		}
+	};
+}
+
+jQuery.each( [
+	"tabIndex",
+	"readOnly",
+	"maxLength",
+	"cellSpacing",
+	"cellPadding",
+	"rowSpan",
+	"colSpan",
+	"useMap",
+	"frameBorder",
+	"contentEditable"
+], function() {
+	jQuery.propFix[ this.toLowerCase() ] = this;
+} );
+
+} );
